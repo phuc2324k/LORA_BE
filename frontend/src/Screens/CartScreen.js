@@ -1,27 +1,30 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../actions/cartAction";
-import { Link } from "react-router-dom";
+import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 
-function CartScreen(props) {
-    const cart = useSelector(state => state.cart);
+function CartScreen() {
+    const cart = useSelector((state) => state.cart);
     const { cartItems } = cart;
-    const productId = props.match.params.id;
-    const qty = props.location.search
-        ? Number(props.location.search.split("=")[1])
-        : 1;
+    const { id } = useParams();  // Thay match.params.id bằng useParams()
+    const location = useLocation();  // Thay location.search bằng useLocation()
+    const qty = location.search ? Number(location.search.split("=")[1]) : 1;
     const dispatch = useDispatch();
-    const removeFromCartHandler = productId => {
+    const navigate = useNavigate();  // Thay history.push bằng useNavigate()
+
+    const removeFromCartHandler = (productId) => {
         dispatch(removeFromCart(productId));
     };
+
     useEffect(() => {
         window.scrollTo(0, 0);
-        if (productId) {
-            dispatch(addToCart(productId, qty));
+        if (id) {
+            dispatch(addToCart(id, qty)); // Sử dụng id thay vì productId
         }
-    }, []);
+    }, [dispatch, id, qty]);  // Thêm qty và id vào dependency array
+
     const checkoutHandler = () => {
-        props.history.push("/signin?redirect=shipping");
+        navigate("/signin?redirect=shipping");  // Thay history.push bằng navigate
     };
 
     return (
@@ -37,8 +40,8 @@ function CartScreen(props) {
                             <h1>Cart is Empty.</h1>
                         </div>
                     ) : (
-                        cartItems.map(item => (
-                            <li>
+                        cartItems.map((item) => (
+                            <li key={item.product}>
                                 <div className="cart-image">
                                     <img src={item.image} alt="product" />
                                 </div>
@@ -52,26 +55,21 @@ function CartScreen(props) {
                                         Quantity :
                                         <select
                                             value={item.qty}
-                                            onChange={e =>
+                                            onChange={(e) =>
                                                 dispatch(
-                                                    addToCart(
-                                                        item.product,
-                                                        e.target.value
-                                                    )
+                                                    addToCart(item.product, e.target.value)
                                                 )
                                             }
                                         >
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
+                                            {[...Array(item.countInStock).keys()].map((x) => (
+                                                <option key={x} value={x + 1}>
+                                                    {x + 1}
+                                                </option>
+                                            ))}
                                         </select>
                                         <button
                                             type="button"
-                                            onClick={() =>
-                                                removeFromCartHandler(
-                                                    item.product
-                                                )
-                                            }
+                                            onClick={() => removeFromCartHandler(item.product)}
                                             className="cart-button"
                                         >
                                             Delete
@@ -86,8 +84,8 @@ function CartScreen(props) {
             </div>
             <div className="cart-action">
                 <h3>
-                    Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items)
-                    : ${cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
+                    Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items): $
+                    {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
                 </h3>
                 <button
                     className="button primary full-width"

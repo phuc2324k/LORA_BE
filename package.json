@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "A E-Commerce website developed using ReactJS for the frontend, NodeJs for the backend, MongoDB as database.",
   "main": "index.js",
   "engines": {
     "node": "12.x",
@@ -22,18 +22,21 @@
   },
   "homepage": "https://github.com/suhassalian27/E-Commerce-Website-using-ReactJS-NodeJS#readme",
   "dependencies": {
-    "@babel/cli": "^7.10.4",
-    "@babel/core": "^7.10.4",
-    "@babel/node": "^7.10.4",
-    "@babel/preset-env": "^7.10.4",
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.3",
     "bootstrap": "^4.5.0",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "dotenv": "^8.6.0",
+    "express": "^4.21.1",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.5.9",
-    "mongoose": "^5.9.22",
+    "mongodb": "^5.6.0",
+    "mongoose": "^8.8.3",
     "nodemon": "^2.0.4",
     "react-bootstrap": "^1.2.2"
-  }
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/node": "^7.26.0",
+    "@babel/preset-env": "^7.26.0"
+  },
+  "keywords": []
 }

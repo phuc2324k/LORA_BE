@@ -1,31 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { detailsProduct } from "../actions/productActions";
 
 function ProductScreen(props) {
     const [qty, setQty] = useState(1);
+    const { id } = useParams(); // Sử dụng useParams để lấy id từ URL
     const productDetails = useSelector(state => state.productDetails);
     const { product, loading, error } = productDetails;
     const dispatch = useDispatch();
+    const navigate = useNavigate(); // Dùng hook useNavigate để điều hướng
 
     useEffect(() => {
-        window.scrollTo(0, 0)
-        dispatch(detailsProduct(props.match.params.id));
-        return () => {
-            //
-        };
-    }, []);
+        window.scrollTo(0, 0);
+        dispatch(detailsProduct(id));
+    }, [dispatch, id]);
 
     const handleAddToCart = () => {
-        props.history.push("/cart/" + props.match.params.id + "?qty=" + qty);
+        navigate(`/cart/${id}?qty=${qty}`);
     };
 
     return (
         <div>
             <div className="back-to-result">
                 <Link to="/">
-                    <span class="material-icons">arrow_back</span>
+                    <span className="material-icons">arrow_back</span>
                 </Link>
             </div>
             {loading ? (
@@ -35,7 +34,7 @@ function ProductScreen(props) {
             ) : (
                 <div className="details">
                     <div className="details-image">
-                        <img src={product.image} alt="product"></img>
+                        <img src={product.image} alt="product" />
                     </div>
                     <div className="details-info">
                         <ul>
@@ -56,27 +55,24 @@ function ProductScreen(props) {
                                 <div>{product.description}</div>
                             </li>
                             <li>
-                                Net Qty :
+                                Net Qty:
                                 <select
                                     value={qty}
-                                    onChange={e => {
+                                    onChange={(e) => {
                                         setQty(e.target.value);
                                     }}
                                 >
-                                    {[
-                                        ...Array(product.countInStock).keys()
-                                    ].map(x => (
-                                        <option key={product._id} value={x + 1}>
+                                    {[...Array(product.countInStock).keys()].map((x) => (
+                                        <option key={x} value={x + 1}>
                                             {x + 1}
                                         </option>
                                     ))}
-                                    }
                                 </select>
                             </li>
                             <li>
                                 {product.countInStock > 0
                                     ? "In Stock"
-                                    : "Unavailble"}
+                                    : "Unavailable"}
                             </li>
                             <li>
                                 {product.countInStock > 0 && (
@@ -87,7 +83,6 @@ function ProductScreen(props) {
                                         Add to Cart
                                     </button>
                                 )}
-                                {console.log(product.category)}
                             </li>
                         </ul>
                     </div>
@@ -96,4 +91,5 @@ function ProductScreen(props) {
         </div>
     );
 }
+
 export default ProductScreen;

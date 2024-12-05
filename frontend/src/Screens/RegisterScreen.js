@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom"; // Import các hook
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../actions/userAction";
 
-function RegisterScreen(props) {
+function RegisterScreen() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -11,24 +11,24 @@ function RegisterScreen(props) {
     const userRegister = useSelector(state => state.userRegister);
     const { loading, userInfo, error } = userRegister;
     const dispatch = useDispatch();
-    const redirect = props.location.search
-        ? props.location.search.split("=")[1]
-        : "/";
+    const location = useLocation(); // Hook lấy location
+    const navigate = useNavigate(); // Hook lấy navigate
+
+    // Lấy giá trị 'redirect' từ URL nếu có, mặc định là '/'
+    const redirect = location.search ? location.search.split("=")[1] : "/";
 
     useEffect(() => {
         window.scrollTo(0, 0);
         if (userInfo) {
-            props.history.push(redirect);
+            navigate(redirect); // Dùng navigate thay vì props.history.push
         }
-        return () => {
-            //
-        };
-    }, [userInfo]);
+    }, [userInfo, navigate, redirect]);
 
     const submitHandler = e => {
         e.preventDefault();
         dispatch(register(name, email, password));
     };
+
     return (
         <div className="form">
             <form onSubmit={submitHandler}>
@@ -84,11 +84,7 @@ function RegisterScreen(props) {
                     <li>Already Have an account?</li>
                     <li>
                         <Link
-                            to={
-                                redirect === "/"
-                                    ? "signin"
-                                    : "signin?redirect=" + redirect
-                            }
+                            to={redirect === "/" ? "/signin" : `/signin?redirect=${redirect}`}
                             className="button secondary text-center"
                         >
                             Sign-In
@@ -99,4 +95,5 @@ function RegisterScreen(props) {
         </div>
     );
 }
+
 export default RegisterScreen;

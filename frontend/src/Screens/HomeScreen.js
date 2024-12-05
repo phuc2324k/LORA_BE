@@ -3,50 +3,48 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../actions/productActions";
 
-import Corousel from "../components/Corousel";
+import Carousel from "../components/Carousel";
 
 function HomeScreen(props) {
-    const productList = useSelector(state => state.productList);
+    const productList = useSelector((state) => state.productList);
     const { products, loading, error } = productList;
+
     const dispatch = useDispatch();
 
     useEffect(() => {
         window.scrollTo(0, 0);
         dispatch(listProducts());
-        return () => {
-        };
-    }, []);
+    }, [dispatch]);
 
     return (
         <div>
-            <Corousel />
+            {/* Carousel Component */}
+            <Carousel />
+
+            {/* Loading/Error/Products */}
             {loading ? (
-                <div>loading...</div>
+                <div>Loading...</div>
             ) : error ? (
-                <div>{error}</div>
+                <div className="error">{error}</div>
+            ) : products.length === 0 ? ( // Kiểm tra nếu products rỗng
+                <div className="no-products">No products found</div>
             ) : (
                 <ul className="products">
-                    {products.map(product => (
+                    {products.map((product) => (
                         <li key={product._id}>
                             <div className="product">
-                                <Link to={"/product/" + product._id}>
+                                <Link to={`/product/${product._id}`}>
                                     <img
                                         className="product-image"
                                         src={product.image}
-                                        alt="product"
+                                        alt={product.name} // Hiển thị tên sản phẩm làm alt
                                     />
                                 </Link>
-                                <Link to={"/product/" + product._id}>
-                                    <div className="product-name">
-                                        {product.name}
-                                    </div>
+                                <Link to={`/product/${product._id}`}>
+                                    <div className="product-name">{product.name}</div>
                                 </Link>
-                                <div className="product-brand">
-                                    {product.brand}
-                                </div>
-                                <div className="product-price">
-                                    ${product.price}
-                                </div>
+                                <div className="product-brand">{product.brand}</div>
+                                <div className="product-price">${product.price}</div>
                                 <div className="product-rating">
                                     {/* {product.rating} Stars ({product.numReviews} Reviews) */}
                                 </div>

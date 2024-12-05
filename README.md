@@ -62,7 +62,7 @@ To-do list:
 ## Screenshots
 
 ### Home Page
-This is the home page of e-commerce. It shows a list of products. It also uses React-Bootstrap Corousel for corousel.
+This is the home page of e-commerce. It shows a list of products. It also uses React-Bootstrap Carousel for corousel.
 
 ![Main](Screenshots/main.png)
 

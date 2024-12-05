@@ -12,6 +12,6 @@ const productSchema = new mongoose.Schema({
     numReviews: { type: Number, default: 0, required: true }
 });
 
-const productModel = mongoose.model("Product", productSchema);
+const Product = mongoose.model("Product", productSchema);
 
-export default productModel;
+export default Product ;

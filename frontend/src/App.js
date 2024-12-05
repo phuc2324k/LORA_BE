@@ -1,16 +1,17 @@
 import React from "react";
 import "./App.css";
 
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+import NumberList from "./screens/NumberList";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import CartScreen from "./screens/CartScreen";
 import SigninScreen from "./screens/SigninScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProductsScreen from "./screens/ProductsScreen";
-import ShipppingScreen from "./screens/ShippingScreen";
+import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 
@@ -39,7 +40,7 @@ function App() {
                     <div className="header-links">
                         <span>
                             <Link to="/cart">
-                                <span class="material-icons">
+                                <span className="material-icons">
                                     shopping_cart
                                 </span>
                             </Link>
@@ -49,7 +50,7 @@ function App() {
                                 <Link to="/profile">{userInfo.name}</Link>
                             ) : (
                                 <Link to="/signin">
-                                    <span class="material-icons">login</span>
+                                    <span className="material-icons">login</span>
                                 </Link>
                             )}
                         </span>
@@ -61,7 +62,7 @@ function App() {
                         className="sidebar-close-button"
                         onClick={closemenu}
                     >
-                        <span class="material-icons">arrow_back_ios</span>
+                        <span className="material-icons">arrow_back_ios</span>
                     </button>
                     <ul>
                         <li>
@@ -80,18 +81,18 @@ function App() {
                 </aside>
                 <main className="main">
                     <div className="content">
-                        <Route path="/products" component={ProductsScreen} />
-                        <Route path="/shipping" component={ShipppingScreen} />
-                        <Route path="/payment" component={PaymentScreen} />
-                        <Route
-                            path="/placeorder"
-                            component={PlaceOrderScreen}
-                        />
-                        <Route path="/signin" component={SigninScreen} />
-                        <Route path="/register" component={RegisterScreen} />
-                        <Route path="/product/:id" component={ProductScreen} />
-                        <Route path="/" exact={true} component={HomeScreen} />
-                        <Route path="/cart/:id?" component={CartScreen} />
+                        <Routes>
+                            <Route path="/products" element={<ProductsScreen />} />
+                            <Route path="/shipping" component={ShippingScreen} />
+                            <Route path="/payment" component={PaymentScreen} />
+                            <Route path="/placeorder" component={PlaceOrderScreen} />
+                            <Route path="/signin" element={<SigninScreen />} />
+                            <Route path="/register" element={<RegisterScreen />} />
+                            <Route path="/product/:id" element={<ProductScreen />} />
+                            <Route path="/cart/:id?" element={<CartScreen />} />
+                            <Route path="/test" element={<NumberList />} />
+                            <Route path="/" element={<HomeScreen />} />
+                        </Routes>
                     </div>
                 </main>
                 <footer className="footer">All right reserved</footer>
