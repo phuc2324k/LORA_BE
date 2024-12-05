@@ -7,6 +7,8 @@ function CartScreen() {
     const cart = useSelector((state) => state.cart);
     const { cartItems } = cart;
     const { id } = useParams();  // Thay match.params.id bằng useParams()
+    const userSignin = useSelector(state => state.userSignin);
+    const { userInfo } = userSignin;
     const location = useLocation();  // Thay location.search bằng useLocation()
     const qty = location.search ? Number(location.search.split("=")[1]) : 1;
     const dispatch = useDispatch();
@@ -24,7 +26,11 @@ function CartScreen() {
     }, [dispatch, id, qty]);  // Thêm qty và id vào dependency array
 
     const checkoutHandler = () => {
-        navigate("/signin?redirect=shipping");  // Thay history.push bằng navigate
+        if (!userInfo) {
+            navigate(`/login?redirect=shipping`);  // Nếu chưa đăng nhập, chuyển đến /login và thêm redirect
+        } else {
+            navigate("/shipping");  // Nếu đã đăng nhập, chuyển đến /shipping
+        }
     };
 
     return (

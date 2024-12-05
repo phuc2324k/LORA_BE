@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { savePayment } from "../actions/cartAction";
 import CheckoutSteps from "../components/CheckoutSteps";
 
-function PaymentScreen(props) {
+function PaymentScreen() {
     const [paymentMethod, setPaymentMethod] = useState("");
-
     const dispatch = useDispatch();
+    const navigate = useNavigate(); // Khởi tạo useNavigate
 
-    const submitHandler = e => {
+    const submitHandler = (e) => {
         e.preventDefault();
         dispatch(savePayment(paymentMethod));
-        props.history.push("placeorder");
+        navigate("/placeorder"); // Thay props.history.push bằng navigate
     };
+
     return (
         <div>
-            <CheckoutSteps step1 step2 step3></CheckoutSteps>
+            <CheckoutSteps step1 step2 step3 />
             <div className="form">
                 <form onSubmit={submitHandler}>
                     <ul className="form-container">
@@ -28,9 +29,9 @@ function PaymentScreen(props) {
                                 type="radio"
                                 name="paymentMethod"
                                 id="paymentMethod"
-                                onChange={e => setPaymentMethod(e.target.value)}
+                                onChange={(e) => setPaymentMethod(e.target.value)}
                                 value="paypal"
-                            ></input>
+                            />
                             <label htmlFor="paymentMethod">Paypal</label>
                         </li>
                         <li>
@@ -44,4 +45,5 @@ function PaymentScreen(props) {
         </div>
     );
 }
+
 export default PaymentScreen;

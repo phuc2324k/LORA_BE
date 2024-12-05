@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { saveShipping } from "../actions/cartAction";
 import CheckoutSteps from "../components/CheckoutSteps";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
-function ShippingScreen(props) {
+function ShippingScreen() {
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
     const [postalCode, setPostalCode] = useState("");
     const [country, setCountry] = useState("");
 
     const dispatch = useDispatch();
+    const navigate = useNavigate(); // Khởi tạo useNavigate
 
-    const submitHandler = e => {
+    const submitHandler = (e) => {
         e.preventDefault();
         dispatch(saveShipping({ address, city, postalCode, country }));
-        props.history.push("payment");
+        navigate("/payment"); // Thay props.history.push bằng navigate
     };
+
     return (
         <div>
-            <CheckoutSteps step1 step2></CheckoutSteps>
+            <CheckoutSteps step1 step2 />
             <div className="form">
                 <form onSubmit={submitHandler}>
                     <ul className="form-container">
@@ -32,8 +34,8 @@ function ShippingScreen(props) {
                                 type="text"
                                 name="address"
                                 id="address"
-                                onChange={e => setAddress(e.target.value)}
-                            ></input>
+                                onChange={(e) => setAddress(e.target.value)}
+                            />
                         </li>
                         <li>
                             <label htmlFor="city">City</label>
@@ -41,8 +43,8 @@ function ShippingScreen(props) {
                                 type="text"
                                 name="city"
                                 id="city"
-                                onChange={e => setCity(e.target.value)}
-                            ></input>
+                                onChange={(e) => setCity(e.target.value)}
+                            />
                         </li>
                         <li>
                             <label htmlFor="postalCode">Postal Code</label>
@@ -50,8 +52,8 @@ function ShippingScreen(props) {
                                 type="text"
                                 name="postalCode"
                                 id="postalCode"
-                                onChange={e => setPostalCode(e.target.value)}
-                            ></input>
+                                onChange={(e) => setPostalCode(e.target.value)}
+                            />
                         </li>
                         <li>
                             <label htmlFor="country">Country</label>
@@ -59,10 +61,9 @@ function ShippingScreen(props) {
                                 type="text"
                                 name="country"
                                 id="country"
-                                onChange={e => setCountry(e.target.value)}
-                            ></input>
+                                onChange={(e) => setCountry(e.target.value)}
+                            />
                         </li>
-
                         <li>
                             <button type="submit" className="button primary">
                                 Continue
@@ -74,4 +75,5 @@ function ShippingScreen(props) {
         </div>
     );
 }
+
 export default ShippingScreen;

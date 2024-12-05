@@ -83,9 +83,9 @@ function App() {
                     <div className="content">
                         <Routes>
                             <Route path="/products" element={<ProductsScreen />} />
-                            <Route path="/shipping" component={ShippingScreen} />
-                            <Route path="/payment" component={PaymentScreen} />
-                            <Route path="/placeorder" component={PlaceOrderScreen} />
+                            <Route path="/shipping" element={<ShippingScreen />} />
+                            <Route path="/payment" element={<PaymentScreen />} />
+                            <Route path="/placeorder" element={<PlaceOrderScreen />} />
                             <Route path="/signin" element={<SigninScreen />} />
                             <Route path="/register" element={<RegisterScreen />} />
                             <Route path="/product/:id" element={<ProductScreen />} />
