@@ -4,8 +4,8 @@ import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import NumberList from "./screens/NumberList";
 import HomeScreen from "./screens/HomeScreen";
+import NumberList from "./screens/NumberList";
 import ProductScreen from "./screens/ProductScreen";
 import CartScreen from "./screens/CartScreen";
 import SigninScreen from "./screens/SigninScreen";
