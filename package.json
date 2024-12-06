@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "nodemon --watch backend --exec babel-node backend/server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install cd client && npm run build cd client"
+    "heroku-postbuild": "cross-env NPM_CONFIG_PRODUCTION=false npm install && cd frontend && npm run build cd ..",
+    "build": "NPM_CONFIG_PRODUCTION=false npm install && cd frontend && npm run build cd .."
   },
   "repository": {
     "type": "git",
@@ -30,13 +31,15 @@
     "mongodb": "^5.6.0",
     "mongoose": "^8.8.3",
     "nodemon": "^2.0.4",
-    "react-bootstrap": "^1.2.2"
+    "react-bootstrap": "^1.2.2",
+    "sass": "^1.82.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",
     "@babel/core": "^7.26.0",
     "@babel/node": "^7.26.0",
-    "@babel/preset-env": "^7.26.0"
+    "@babel/preset-env": "^7.26.0",
+    "cross-env": "^7.0.3"
   },
   "keywords": []
 }
