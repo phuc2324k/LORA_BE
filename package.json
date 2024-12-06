@@ -9,8 +9,8 @@
   },
   "scripts": {
     "start": "nodemon --watch backend --exec babel-node backend/server.js",
-    "heroku-postbuild": "cross-env NPM_CONFIG_PRODUCTION=false npm install && cd frontend && npm run build && cd ..",
-    "build": "cross-env NPM_CONFIG_PRODUCTION=false npm install && cd frontend && npm run build && cd .."
+    "heroku-postbuild": "cross-env NPM_CONFIG_PRODUCTION=false npm install && cd frontend && npm install && npm run build && cd ..",
+    "build": "cross-env NPM_CONFIG_PRODUCTION=false npm install && cd frontend && npm install && npm run build && cd .."
   },
   "repository": {
     "type": "git",
